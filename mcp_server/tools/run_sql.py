@@ -40,7 +40,10 @@ deployments(id SERIAL PK, service_id INT -> services.id, version TEXT,
             deployed_at TIMESTAMPTZ, deployed_by TEXT)
 
 Join to services to filter or group by service name. Data covers the last 90 days; use
-now()-relative filters, e.g. deployed_at >= now() - interval '7 days'."""
+now()-relative filters, e.g. deployed_at >= now() - interval '7 days'.
+These three tables are the whole database you can see. For questions about the schema
+("what tables/columns are there?") answer from this description: system catalogs such as
+information_schema and pg_catalog are blocked."""
 
 
 class SqlValidationError(ValueError):
