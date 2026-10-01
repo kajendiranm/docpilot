@@ -1,5 +1,6 @@
 line-length = 100
 target-version = "py311"
+src = ["backend", "mcp_server"]  # first-party code roots, for import sorting
 
 [lint]
 # E/F: pycodestyle + pyflakes, I: import sorting, B: bugbear, UP: modern syntax, ASYNC: async pitfalls

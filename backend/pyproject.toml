@@ -5,6 +5,7 @@ description = "DocPilot agent backend, ingestion and MCP server"
 requires-python = ">=3.11"
 dependencies = [
     "asyncpg>=0.31.0",
+    "google-genai>=2.26.0",
     "pydantic-settings>=2.15.0",
 ]
 
@@ -17,4 +18,5 @@ dev = [
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]  # so tests can `import app` / `import ingest`
 asyncio_mode = "auto"

@@ -12,5 +12,6 @@ cp .env.example .env
 docker compose up -d                 # Postgres 16 + pgvector on localhost:5433
 cd backend && uv sync
 uv run python ../data/seed/seed.py   # demo DB: 10 services, 200 incidents, 300 deployments
+uv run python -m ingest.run_ingest --path ../data/docs   # needs GEMINI_API_KEY in .env
 uv run pytest && uv run ruff check ..
 ```
