@@ -1,0 +1,6 @@
+line-length = 100
+target-version = "py311"
+
+[lint]
+# E/F: pycodestyle + pyflakes, I: import sorting, B: bugbear, UP: modern syntax, ASYNC: async pitfalls
+select = ["E", "F", "I", "B", "UP", "ASYNC"]

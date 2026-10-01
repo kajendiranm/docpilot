@@ -1,0 +1,20 @@
+[project]
+name = "docpilot-backend"
+version = "0.1.0"
+description = "DocPilot agent backend, ingestion and MCP server"
+requires-python = ">=3.11"
+dependencies = [
+    "asyncpg>=0.31.0",
+    "pydantic-settings>=2.15.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "pytest-asyncio>=0.23",
+    "ruff>=0.6",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
