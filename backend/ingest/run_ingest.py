@@ -6,18 +6,15 @@ Run from backend/:  uv run python -m ingest.run_ingest --path ../data/docs
 import argparse
 import asyncio
 import time
-from collections.abc import Awaitable, Callable
 from dataclasses import dataclass
 from pathlib import Path
 
 import asyncpg
 
 from app.db import create_pool, init_schema, to_pgvector
-from app.llm import TaskType, embed_texts
+from app.llm import EmbedFn, embed_texts
 from ingest.chunker import Chunk, chunk_markdown
 from ingest.loader import LoadedDoc, load_markdown_files
-
-EmbedFn = Callable[[list[str], TaskType], Awaitable[list[list[float]]]]
 
 
 @dataclass

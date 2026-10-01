@@ -14,7 +14,8 @@ class Settings(BaseSettings):
 
     # Gemini. SecretStr hides the key in logs, reprs and tracebacks.
     gemini_api_key: SecretStr = SecretStr("")
-    gemini_chat_model: str = "gemini-3.8-flash"
+    gemini_chat_model: str = "gemini-3.5-flash-lite"
+    gemini_thinking_level: str = "MINIMAL"
     gemini_embed_model: str = "gemini-embedding-001"
     embed_dimensions: int = 768
 
@@ -23,7 +24,7 @@ class Settings(BaseSettings):
     readonly_database_url: str = "postgresql://docpilot_reader:reader@localhost:5433/docpilot"
 
     # Retrieval
-    search_score_threshold: float = 0.3
+    search_score_threshold: float = 0.65  # tuned: relevant >= 0.71, off-topic <= 0.6
 
     # GitHub
     github_token: SecretStr = SecretStr("")

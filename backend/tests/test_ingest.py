@@ -1,45 +1,13 @@
 """Ingestion against a throwaway Postgres database, with a fake embedder (no API calls)."""
 
-import uuid
-from collections.abc import AsyncIterator
 from pathlib import Path
-from urllib.parse import urlparse, urlunparse
 
 import asyncpg
 import pytest
+from db_fixtures import FakeEmbedder
 
-from app.config import get_settings
 from app.llm import TaskType
 from ingest.run_ingest import ingest
-
-
-@pytest.fixture
-async def pool() -> AsyncIterator[asyncpg.Pool]:
-    admin_url = get_settings().database_url
-    try:
-        admin = await asyncpg.connect(admin_url, timeout=3)
-    except (OSError, asyncpg.PostgresError):
-        pytest.skip("Postgres not reachable (run `docker compose up -d`)")
-
-    name = f"docpilot_test_{uuid.uuid4().hex[:8]}"
-    await admin.execute(f'CREATE DATABASE "{name}"')
-    test_pool = await asyncpg.create_pool(urlunparse(urlparse(admin_url)._replace(path=f"/{name}")))
-    try:
-        yield test_pool
-    finally:
-        await test_pool.close()
-        await admin.execute(f'DROP DATABASE "{name}"')
-        await admin.close()
-
-
-class FakeEmbedder:
-    def __init__(self) -> None:
-        self.calls = 0
-
-    async def __call__(self, texts: list[str], task_type: TaskType) -> list[list[float]]:
-        self.calls += 1
-        dims = get_settings().embed_dimensions
-        return [[float(i % 7 + 1)] * dims for i, _ in enumerate(texts)]
 
 
 def write_docs(folder: Path) -> None:
